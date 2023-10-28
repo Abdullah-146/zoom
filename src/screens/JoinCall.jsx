@@ -159,6 +159,7 @@ const JoinCall = () => {
                             type='text'
                             placeholder='Enter PassCode'
                             name={"passCode"}
+                            required={false}
                         />
                     </div>
                     <Button text='Join Meeting' type={"Submit"} loading={meetLoading} />

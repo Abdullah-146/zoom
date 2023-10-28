@@ -45,8 +45,9 @@ function Call() {
       frameRate: 30,
       facingMode: facingMode,
       mediaSource: mediaSource,
-      width:{min:640,ideal:1280,max:1920},
-      height:{min:480,ideal:720,max:1080}
+      width: { min: 640, ideal: 1280, max: 1920 },
+      height: { min: 480, ideal: 720, max: 1080 }
+
     }
   };
 
@@ -194,7 +195,7 @@ function Call() {
       if (!isScreenSharing) {
         setIsCameraOn(false);
         setIsScreenSharing(true);
-        const mediaStream = await mediaDevices.getDisplayMedia();
+        const mediaStream = await navigator.mediaDevices.getDisplayMedia();
         setLocalMediaStream(mediaStream);
         locaMediaRef.current = mediaStream;
         Object.keys(remotePeers.current).forEach((userId) => {
@@ -225,6 +226,7 @@ function Call() {
   const handleEndCall = () => {
     // destroyDataChannel();
     // destroyingMediaStream();
+    console.log("END CALL");
     cleanupConnections();
 
 
@@ -342,6 +344,10 @@ function Call() {
 
       // Release the local media stream
       destroyingMediaStream();
+
+      // Stop using the webCam and microphone
+      setIsCameraOn(false);
+      setIsMuted(true);
 
       // Emit a "leave-room" event to notify the server
       socket.emit("leave-room", { meetId });
@@ -575,19 +581,16 @@ function Call() {
   // ======================================================================= RETURNS VIEW ====================================================================//
 
   return (
-    <>
-      <Navbar />
-      {/* <img src={imgCall} alt="" className="m-auto my-10" /> */}
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col h-screen ">
         {/* Participants Streams */}
-        <div ref={remotePeersViewRef} className="flex w-full items-center overflow-y-hidden">
+        <div ref={remotePeersViewRef} style={{width:"100%",height:200}} className="flex w-full items-center overflow-x-hidden">
           <AiOutlineLeft className="text-3xl text-gray-500 cursor-pointer" onClick={()=>{
             remotePeersViewRef.current.scrollLeft-=100;
           }} />
-          <div className="flex flex-1 items-center">
+          <div style={{height:100}} className="flex flex-1 items-center">
             {
               seePeerList.map((item) =>
-                <RemotePeerStream src={peerData[item]?.stream} name={peerData[item]?.name} loading={peerData[item]?.loading} userId={
+                <RemotePeerStream style={{width:100,height:100}} src={peerData[item]?.stream} name={peerData[item]?.name} loading={peerData[item]?.loading} userId={
                   peerData[item]?.userId
                 } />
               )
@@ -599,6 +602,12 @@ function Call() {
         </div>
         {/* My Stream */}
         <MyStreamView
+        videoStyle={{
+          width: "100%",
+          
+          objectFit: "cover",
+
+        }}
           src={localMediaStream}
           microphone={!isMuted}
           toggleMicrophone={toggleActiveMicrophone}
@@ -610,8 +619,6 @@ function Call() {
           endCall={handleEndCall}
         />
       </div>
-      <Footer />
-    </>
   );
 }
 

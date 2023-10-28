@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ThreeCircles } from 'react-loader-spinner'
 
 function RemotePeerStream(props) {
@@ -11,8 +11,10 @@ function RemotePeerStream(props) {
     }, [props.src])
 
     return (
-        <div className='flex flex-1 relative'>
-            <video id={`remotePeer-${props.userId}`} autoPlay className='w-full h-full object-cover' />
+        <div style={props.style} className='flex flex-1 relative'>
+            <video style={{
+                    width: '100%', height: '100%', objectFit: 'cover'
+            }} id={`remotePeer-${props.userId}`} autoPlay className='object-cover bg-black' />
             {
                 props.name &&
                 <p className='absolute bottom-0 left-0 right-0 text-white text-lg text-center bg-black bg-opacity-50'>{props.name}</p>
