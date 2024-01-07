@@ -99,8 +99,9 @@ const JoinCall = (props) => {
                         <p>Enter PassCode</p>
                         <InputField
                             type='text'
-                            placeholder='Enter PassCode'
+                            placeholder='Enter PassCode if required!'
                             name={"passCode"}
+                            required={false}
                         />
                     </div>
                     <Button text='Join Meeting' type={"Submit"} loading={meetLoading} />

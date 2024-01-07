@@ -668,6 +668,21 @@ function Meet(props) {
     });
   }
 
+
+  useEffect(() => {
+
+    if(seePeerList.length > 1){
+      
+      if(divRef.current){
+        const currentPos = divRef.current.getBoundingClientRect();
+        if(currentPos.left < 0 || currentPos.top < 0 || currentPos.right > window.innerWidth || currentPos.bottom > window.innerHeight){
+          divRef.current.style.transform = `translate(${0}px, ${0}px)`;
+        }
+      }
+    }
+
+  }, [seePeerList]);
+
   // =========================================================================================================================================================//
   // ======================================================================= RETURNS VIEW ====================================================================//
 
