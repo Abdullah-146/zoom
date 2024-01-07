@@ -186,12 +186,11 @@ function Meet(props) {
             offerMaking = false;
           }
         }
-
-
-        localMediaStreamRef.current?.getTracks()?.forEach((track) => {
+ 
+        localMediaStreamRef.current.getTracks().forEach((track) => {
           remotePeers.current[userId].addTrack(track, localMediaStreamRef.current);
         });
-
+      
 
         remotePeers.current[userId]?.addEventListener('iceconnectionstatechange', (event) => {
           if (remotePeers.current[userId]) {
@@ -671,11 +670,11 @@ function Meet(props) {
 
   useEffect(() => {
 
-    if(seePeerList.length > 1){
-      
-      if(divRef.current){
+    if (seePeerList.length > 1) {
+
+      if (divRef.current) {
         const currentPos = divRef.current.getBoundingClientRect();
-        if(currentPos.left < 0 || currentPos.top < 0 || currentPos.right > window.innerWidth || currentPos.bottom > window.innerHeight){
+        if (currentPos.left < 0 || currentPos.top < 0 || currentPos.right > window.innerWidth || currentPos.bottom > window.innerHeight) {
           divRef.current.style.transform = `translate(${0}px, ${0}px)`;
         }
       }
@@ -691,7 +690,7 @@ function Meet(props) {
   return (
 
     <div className="flex flex-1 flex-col h-screen max-h-screen  overflow-hidden bg-[#272828]">
-      <div className="flex flex-row flex-1 max-h-[90%] border-2">
+      <div className="flex flex-row flex-1 max-h-[90%]">
         <div className={`flex-1 relative overflow-hidden grid ${seePeerList.length <= 1 ? 'grid-cols-1' : 'grid-cols-3'} grid-flow-row transition-all duration-200 ease-linear`}>
           <div
             ref={divRef}
@@ -834,7 +833,7 @@ const Call = () => {
 
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
-      navigate('/login',{state:{from:`/call/${location.pathname.split('/')[2]}`}});
+      navigate('/login', { state: { from: `/call/${location.pathname.split('/')[2]}` } });
     }
     setLoading(false);
 

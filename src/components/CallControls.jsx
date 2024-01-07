@@ -12,7 +12,7 @@ function CallControls({ handleSideBar, handleEndCall, handleToggleScreenShare}) 
 
 
   return (
-    <div className='bg-black flex items-center justify-between w-full h-[10%] max-h-[10%] border'>
+    <div className='bg-black flex items-center justify-between w-full h-[10%] max-h-[10%]'>
         <div className='flex items-center gap-4 justify-center flex-1'>
           <div className='flex flex-col items-center'>
             {sound ?
